@@ -1,0 +1,18 @@
+# Course and team materials
+*.pdf
+*.zip
+*.tar
+*.gz
+
+# Build outputs
+*.o
+*.out
+*.elf
+*.bin
+build/
+dist/
+
+# Editor and operating-system files
+.DS_Store
+.vscode/
+.idea/
