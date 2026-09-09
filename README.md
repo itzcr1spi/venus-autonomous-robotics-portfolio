@@ -1,66 +1,82 @@
-# Engineering Challenge for Venus | Autonomous Robotics
+# Engineering Challenge for Venus | Autonomous Multi-Robot Rover
 
-An autonomous-robotics project focused on developing a system that can sense its environment, make navigation decisions and communicate its status remotely.
+An embedded-systems project in which two autonomous rover robots explored an unknown simulated Venus environment, identified rock samples and transmitted live mission data to a base-station map.
 
 > **Publication note**  
-> This repository contains my own documentation, recreated diagrams and simplified examples. It does not include restricted course material, shared team code, non-public test data or confidential project files.
+> This repository contains my own portfolio documentation, recreated diagrams and simplified examples. It excludes shared team source code, course-provided libraries, compiled binaries, raw data and the original course submission.
 
 ## Overview
 
-The Engineering Challenge for Venus involved developing autonomous robotic systems in a multidisciplinary team environment.
+The project integrated autonomous navigation, multi-sensor data acquisition, embedded C programming, wireless communication and a Python-based mission-control interface.
 
-The project combined embedded hardware, sensor integration, communication, navigation logic and practical robot testing. The aim was to create a reliable system capable of gathering environmental information, navigating autonomously and reporting useful status data.
+Two robots independently explored the terrain, detected obstacles and boundaries, classified rock samples, measured ambient temperature and sent their observations to a base station for real-time visualisation.
 
 ## My Contribution
 
-Key areas of my involvement included:
+I contributed to embedded systems and system-integration work across the PYNQ rover platform, ESP32 communication link, sensor-driven behaviour and testing.
 
-- Working with PYNQ and ESP32-based embedded hardware.
-- Developing and supporting C-based embedded software.
-- Integrating sensors into the robotics system.
-- Using MQTT for communication and remote monitoring.
-- Contributing to autonomous navigation and frontier-based exploration algorithms.
-- Participating in system integration, robot testing and issue resolution.
+This involved working with C, PYNQ, ESP32, UART, MQTT, sensor integration and autonomous rover behaviour.
 
 ## System Architecture
 
 ```text
 Sensors
-   ↓
-Embedded hardware
-(PYNQ / ESP32)
-   ↓
-Navigation and decision logic
-   ↓
-Motor / robot actions
-   ↓
-MQTT communication and remote monitoring
+(VL53L0X, TCS3200, NTC, TCRT5000)
+                 ↓
+PYNQ-Z2 rover controller
+Embedded C and navigation state machine
+                 ↓ UART
+ESP32 communication bridge
+                 ↓ MQTT
+Python mission control and graphical map
 ```
 
-## Engineering Focus
+## Autonomous Behaviour
 
-- Embedded systems integration
-- Sensor data collection and processing
-- Autonomous navigation
-- Frontier-based exploration
-- Wireless communication using MQTT
-- Software and hardware debugging
-- Practical robot testing
+The rover used a reactive state machine:
+
+```text
+SCAN → APPROACH → EVALUATE → ROAM
+```
+
+- **SCAN:** rotate and identify possible rock samples
+- **APPROACH:** navigate towards a detected sample while avoiding obstacles
+- **EVALUATE:** classify colour, measure temperature and report findings
+- **ROAM:** move to a new area when no sample is detected
+- **Boundary response:** reverse, turn and resume exploration when black tape is detected
+
+## Engineering Highlights
+
+- Integrated three VL53L0X time-of-flight sensors on a shared I2C bus.
+- Used controlled startup and XSHUT pins to assign unique sensor addresses.
+- Used a TCS3200 colour sensor to classify rock samples.
+- Used an NTC-10K thermistor and ADC measurement for temperature sensing.
+- Used TCRT5000 infrared sensors to detect boundaries and crater edges.
+- Implemented UART communication between PYNQ and ESP32.
+- Used MQTT for telemetry, mission-control updates and coordination between two rovers.
+- Built a Python-based mission-control interface for live mapping and robot telemetry.
+- Designed fault handling for boundaries, communication loss and invalid sensor data.
+
+## Testing and Results
+
+The system was tested from individual components through integrated subsystems and full operation on the physical Venus mock-up terrain.
+
+Validated capabilities included:
+
+- Autonomous terrain exploration
+- Obstacle and boundary avoidance
+- Rock-sample detection and colour classification
+- Temperature measurement
+- Sensor-data transmission through MQTT
+- Real-time base-station map updates
 
 ## Technologies
 
-PYNQ · ESP32 · C · MQTT · Embedded Systems · Sensor Integration · Autonomous Robotics
+C · Python · PYNQ-Z2 · ESP32 · UART · MQTT · I2C · GPIO · ADC · VL53L0X · TCS3200 · TCRT5000 · Embedded Systems
 
 ## Repository Contents
 
-- `docs/` — system overview, engineering approach and testing notes
-- `assets/` — recreated diagrams and approved photos or screenshots
-- `examples/` — simplified, independently written embedded or navigation examples
-
-## Key Learning Outcomes
-
-- Designing systems across hardware, embedded software and communication layers
-- Integrating sensors into an autonomous platform
-- Developing and testing navigation behaviour in real conditions
-- Debugging complex interactions between embedded components
-- Communicating technical progress within a multidisciplinary team
+- `docs/` — system architecture, test approach and engineering decisions
+- `assets/` — recreated diagrams and approved test visuals
+- `examples/` — small, independently written embedded or communication examples
+- `README.md` — project overview
